@@ -18,7 +18,7 @@ parse_ggplot2_args(
 
   (`ggplot2_args`)\
   This argument could be a result of the
-  [`resolve_ggplot2_args()`](https://insightsengineering.github.io/teal.widgets/reference/resolve_ggplot2_args.md).
+  [`resolve_ggplot2_args()`](https://pharmaverse.github.io/teal.widgets/reference/resolve_ggplot2_args.md).
 
 - ggtheme:
 

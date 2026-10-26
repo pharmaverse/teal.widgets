@@ -14,7 +14,7 @@ parse_basic_table_args(basic_table_args = teal.widgets::basic_table_args())
 
   (`basic_table_args`)\
   This argument could be a result of the
-  [`resolve_basic_table_args()`](https://insightsengineering.github.io/teal.widgets/reference/resolve_basic_table_args.md).
+  [`resolve_basic_table_args()`](https://pharmaverse.github.io/teal.widgets/reference/resolve_basic_table_args.md).
 
 ## Value
 

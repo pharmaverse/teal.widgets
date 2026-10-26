@@ -24,7 +24,7 @@ resolve_basic_table_args(
   end user setup for
   [`rtables::basic_table()`](https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html)
   of a specific table. Created with the
-  [`basic_table_args()`](https://insightsengineering.github.io/teal.widgets/reference/basic_table_args.md)
+  [`basic_table_args()`](https://pharmaverse.github.io/teal.widgets/reference/basic_table_args.md)
   function. The `NULL` value is supported.
 
 - user_default:
@@ -33,7 +33,7 @@ resolve_basic_table_args(
   end user default setup for
   [`rtables::basic_table()`](https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html)
   of a specific table. Created with the
-  [`basic_table_args()`](https://insightsengineering.github.io/teal.widgets/reference/basic_table_args.md)
+  [`basic_table_args()`](https://pharmaverse.github.io/teal.widgets/reference/basic_table_args.md)
   function. The `NULL` value is supported.
 
 - module_table:
@@ -42,7 +42,7 @@ resolve_basic_table_args(
   module creator setup for
   [`rtables::basic_table()`](https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html)
   of a specific table. Created with the
-  [`basic_table_args()`](https://insightsengineering.github.io/teal.widgets/reference/basic_table_args.md)
+  [`basic_table_args()`](https://pharmaverse.github.io/teal.widgets/reference/basic_table_args.md)
   function. The `NULL` value is supported.
 
 - app_default:
@@ -68,7 +68,7 @@ checking in the following order:
 
 ## See also
 
-[`parse_basic_table_args()`](https://insightsengineering.github.io/teal.widgets/reference/parse_basic_table_args.md)
+[`parse_basic_table_args()`](https://pharmaverse.github.io/teal.widgets/reference/parse_basic_table_args.md)
 to parse resolved list into list of calls.
 
 ## Examples

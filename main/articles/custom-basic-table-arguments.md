@@ -16,7 +16,7 @@ The implementation should consist of 5 steps:
 
 1.  Add the `basic_table_args` arguments to the `tm_t_*` function and
     then its server function. The default should be set to the
-    [`basic_table_args()`](https://insightsengineering.github.io/teal.widgets/reference/basic_table_args.md)
+    [`basic_table_args()`](https://pharmaverse.github.io/teal.widgets/reference/basic_table_args.md)
     function for a single plot. and `list(default = basic_table_args())`
     multi-table modules.
 2.  Add validation (e.g. `stopifnot` or `checkmate`) for the
@@ -28,15 +28,15 @@ The implementation should consist of 5 steps:
     `if (is_basic_table_args) basic_table_args <- list(default = basic_table_args)`
     is recommended.
 3.  Aggregate and reduce all `basic_table_args` sources with
-    [`resolve_basic_table_args()`](https://insightsengineering.github.io/teal.widgets/reference/resolve_basic_table_args.md).
+    [`resolve_basic_table_args()`](https://pharmaverse.github.io/teal.widgets/reference/resolve_basic_table_args.md).
 4.  Use the
-    [`parse_basic_table_args()`](https://insightsengineering.github.io/teal.widgets/reference/parse_basic_table_args.md)
+    [`parse_basic_table_args()`](https://pharmaverse.github.io/teal.widgets/reference/parse_basic_table_args.md)
     function which will aggregate and reduce all inputs to one
     expression.
 5.  Add the created expression to the chunk with a table.
 
 The
-[`parse_basic_table_args()`](https://insightsengineering.github.io/teal.widgets/reference/parse_basic_table_args.md)
+[`parse_basic_table_args()`](https://pharmaverse.github.io/teal.widgets/reference/parse_basic_table_args.md)
 function picks the first non NULL value for each argument, checking in
 order:
 
@@ -51,15 +51,15 @@ order:
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`shiny`](https://shiny.posit.co/)`)`\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`teal.widgets`](https://insightsengineering.github.io/teal.widgets/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`teal.widgets`](https://pharmaverse.github.io/teal.widgets/)`)`\
 [`library`](https://rdrr.io/r/base/library.html)`(`[`magrittr`](https://magrittr.tidyverse.org)`)`\
 \
-[`options`](https://rdrr.io/r/base/options.html)`(``"teal.basic_table_args"`` ``=`` `[`basic_table_args`](https://insightsengineering.github.io/teal.widgets/reference/basic_table_args.md)`(``title ``=`` ``"ENV_TITLE"``)``)`\
+[`options`](https://rdrr.io/r/base/options.html)`(``"teal.basic_table_args"`` ``=`` `[`basic_table_args`](https://pharmaverse.github.io/teal.widgets/reference/basic_table_args.md)`(``title ``=`` ``"ENV_TITLE"``)``)`\
 \
 `basic_table_args`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
-`  default ``=`` `[`basic_table_args`](https://insightsengineering.github.io/teal.widgets/reference/basic_table_args.md)`(``prov_footer ``=`` ``"USER_FOOTER"``)``,`\
-`  table1 ``=`` `[`basic_table_args`](https://insightsengineering.github.io/teal.widgets/reference/basic_table_args.md)`(``subtitles ``=`` ``"USER_SUBTITLES_TABLE1"``)``,`\
-`  table2 ``=`` `[`basic_table_args`](https://insightsengineering.github.io/teal.widgets/reference/basic_table_args.md)`(``subtitles ``=`` ``"USER_SUBTITLES_TABLE2"``)`\
+`  default ``=`` `[`basic_table_args`](https://pharmaverse.github.io/teal.widgets/reference/basic_table_args.md)`(``prov_footer ``=`` ``"USER_FOOTER"``)``,`\
+`  table1 ``=`` `[`basic_table_args`](https://pharmaverse.github.io/teal.widgets/reference/basic_table_args.md)`(``subtitles ``=`` ``"USER_SUBTITLES_TABLE1"``)``,`\
+`  table2 ``=`` `[`basic_table_args`](https://pharmaverse.github.io/teal.widgets/reference/basic_table_args.md)`(``subtitles ``=`` ``"USER_SUBTITLES_TABLE2"``)`\
 `)`\
 \
 \
@@ -69,7 +69,7 @@ order:
 `)`\
 \
 `server`` ``<-`` ``function``(``input``, ``output``, ``session``)`` ``{`\
-`  ``dev_table_args`` ``<-`` `[`basic_table_args`](https://insightsengineering.github.io/teal.widgets/reference/basic_table_args.md)`(``show_colcounts ``=`` ``TRUE``)`\
+`  ``dev_table_args`` ``<-`` `[`basic_table_args`](https://pharmaverse.github.io/teal.widgets/reference/basic_table_args.md)`(``show_colcounts ``=`` ``TRUE``)`\
 \
 `  ``table_expr`` ``<-`` `[`substitute`](https://rdrr.io/r/base/substitute.html)`(`\
 `    expr ``=`` ``{`\
@@ -84,8 +84,8 @@ order:
 `      ``table2`` ``<-`` ``rtables``::`[`build_table`](https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html)`(``tt``, ``iris``)`\
 `      ``table2`\
 `    ``}``,`\
-`    env ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``f_table_expr ``=`` `[`parse_basic_table_args`](https://insightsengineering.github.io/teal.widgets/reference/parse_basic_table_args.md)`(`\
-`      `[`resolve_basic_table_args`](https://insightsengineering.github.io/teal.widgets/reference/resolve_basic_table_args.md)`(`\
+`    env ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``f_table_expr ``=`` `[`parse_basic_table_args`](https://pharmaverse.github.io/teal.widgets/reference/parse_basic_table_args.md)`(`\
+`      `[`resolve_basic_table_args`](https://pharmaverse.github.io/teal.widgets/reference/resolve_basic_table_args.md)`(`\
 `        user_table ``=`` ``basic_table_args``$``table2``,`\
 `        user_default ``=`` ``basic_table_args``$``default``,`\
 `        module_table ``=`` ``dev_table_args`\

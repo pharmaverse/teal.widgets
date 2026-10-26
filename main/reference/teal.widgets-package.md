@@ -8,12 +8,11 @@ to extend module functionality by additional inputs and output controls.
 
 Useful links:
 
-- <https://insightsengineering.github.io/teal.widgets/>
+- <https://pharmaverse.github.io/teal.widgets/>
 
-- <https://github.com/insightsengineering/teal.widgets>
+- <https://github.com/pharmaverse/teal.widgets>
 
-- Report bugs at
-  <https://github.com/insightsengineering/teal.widgets/issues>
+- Report bugs at <https://github.com/pharmaverse/teal.widgets/issues>
 
 ## Author
 

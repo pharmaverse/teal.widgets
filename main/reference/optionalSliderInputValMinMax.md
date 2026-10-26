@@ -1,7 +1,7 @@
 # Optional Slider Input with minimal and maximal values
 
 The
-[`optionalSliderInput()`](https://insightsengineering.github.io/teal.widgets/reference/optionalSliderInput.md)
+[`optionalSliderInput()`](https://pharmaverse.github.io/teal.widgets/reference/optionalSliderInput.md)
 function needs three arguments to determine whether to hide the
 `sliderInput` widget or not. For `teal` modules we specify an optional
 slider input with one argument here called `value_min_max`.
@@ -34,7 +34,7 @@ optionalSliderInputValMinMax(
   If of length 1 then the value gets set to that number and the
   `sliderInput` will be hidden. Otherwise, if it is of length three the
   three elements will map to `value`, `min` and `max` of the
-  [`optionalSliderInput()`](https://insightsengineering.github.io/teal.widgets/reference/optionalSliderInput.md)
+  [`optionalSliderInput()`](https://pharmaverse.github.io/teal.widgets/reference/optionalSliderInput.md)
   function.
 
 - label_help:

@@ -23,14 +23,14 @@ resolve_ggplot2_args(
   (`ggplot2_args`)\
   end user setup for theme and labs in the specific plot. Created with
   the
-  [`ggplot2_args()`](https://insightsengineering.github.io/teal.widgets/reference/ggplot2_args.md)
+  [`ggplot2_args()`](https://pharmaverse.github.io/teal.widgets/reference/ggplot2_args.md)
   function. The `NULL` value is supported.
 
 - user_default:
 
   (`ggplot2_args`)\
   end user setup for module default theme and labs. Created with the
-  [`ggplot2_args()`](https://insightsengineering.github.io/teal.widgets/reference/ggplot2_args.md)
+  [`ggplot2_args()`](https://pharmaverse.github.io/teal.widgets/reference/ggplot2_args.md)
   function. The `NULL` value is supported.
 
 - module_plot:
@@ -38,7 +38,7 @@ resolve_ggplot2_args(
   (`ggplot2_args`)\
   module creator setup for theme and labs in the specific plot. Created
   with the
-  [`ggplot2_args()`](https://insightsengineering.github.io/teal.widgets/reference/ggplot2_args.md)
+  [`ggplot2_args()`](https://pharmaverse.github.io/teal.widgets/reference/ggplot2_args.md)
   function. The `NULL` value is supported.
 
 - app_default:
@@ -64,7 +64,7 @@ checking in the following order:
 
 ## See also
 
-[`parse_ggplot2_args()`](https://insightsengineering.github.io/teal.widgets/reference/parse_ggplot2_args.md)
+[`parse_ggplot2_args()`](https://pharmaverse.github.io/teal.widgets/reference/parse_ggplot2_args.md)
 to parse resolved list into list of calls.
 
 ## Examples

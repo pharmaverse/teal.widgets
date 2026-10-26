@@ -29,16 +29,16 @@ The implementation should consist of 5 steps:
     `if (is_ggplot2_args) ggplot2_args <- list(default = ggplot2_args)`
     is recommended.
 3.  Aggregating and reducing all `ggplot2_args` sources with
-    [`resolve_ggplot2_args()`](https://insightsengineering.github.io/teal.widgets/reference/resolve_ggplot2_args.md).
+    [`resolve_ggplot2_args()`](https://pharmaverse.github.io/teal.widgets/reference/resolve_ggplot2_args.md).
 4.  Usage of the
-    [`parse_ggplot2_args()`](https://insightsengineering.github.io/teal.widgets/reference/parse_ggplot2_args.md)
+    [`parse_ggplot2_args()`](https://pharmaverse.github.io/teal.widgets/reference/parse_ggplot2_args.md)
     function which will parse inputs to list of expressions.
 5.  Adding the created expression to the last chunk of a plot.
     `Reduce(function(x, y) call("+", x, y), list(...)` function could be
     helpful at this step.
 
 The
-[`resolve_ggplot2_args()`](https://insightsengineering.github.io/teal.widgets/reference/resolve_ggplot2_args.md)
+[`resolve_ggplot2_args()`](https://pharmaverse.github.io/teal.widgets/reference/resolve_ggplot2_args.md)
 function picks the first non NULL value for each argument, checking in
 order:
 
@@ -71,16 +71,16 @@ to prefix it directly to a specific package, like
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`shiny`](https://shiny.posit.co/)`)`\
 [`library`](https://rdrr.io/r/base/library.html)`(`[`ggplot2`](https://ggplot2.tidyverse.org)`)`\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`teal.widgets`](https://insightsengineering.github.io/teal.widgets/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`teal.widgets`](https://pharmaverse.github.io/teal.widgets/)`)`\
 \
-[`options`](https://rdrr.io/r/base/options.html)`(``"teal.ggplot2_args"`` ``=`` `[`ggplot2_args`](https://insightsengineering.github.io/teal.widgets/reference/ggplot2_args.md)`(``labs ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``caption ``=`` ``"Caption from options"``)``)``)`\
+[`options`](https://rdrr.io/r/base/options.html)`(``"teal.ggplot2_args"`` ``=`` `[`ggplot2_args`](https://pharmaverse.github.io/teal.widgets/reference/ggplot2_args.md)`(``labs ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``caption ``=`` ``"Caption from options"``)``)``)`\
 \
 `user_ggplot2_args`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
-`  default ``=`` `[`ggplot2_args`](https://insightsengineering.github.io/teal.widgets/reference/ggplot2_args.md)`(`\
+`  default ``=`` `[`ggplot2_args`](https://pharmaverse.github.io/teal.widgets/reference/ggplot2_args.md)`(`\
 `    labs ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``title ``=`` ``"User default title"``)``,`\
 `    theme ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``legend.position ``=`` ``"right"``, legend.direction ``=`` ``"vertical"``)`\
 `  ``)``,`\
-`  plot1 ``=`` `[`ggplot2_args`](https://insightsengineering.github.io/teal.widgets/reference/ggplot2_args.md)`(`\
+`  plot1 ``=`` `[`ggplot2_args`](https://pharmaverse.github.io/teal.widgets/reference/ggplot2_args.md)`(`\
 `    labs ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``title ``=`` ``"User title"``)``,`\
 `    theme ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``legend.position ``=`` ``"right"``, legend.direction ``=`` ``"vertical"``)`\
 `  ``)`\
@@ -92,13 +92,13 @@ to prefix it directly to a specific package, like
 `)`\
 \
 `server`` ``<-`` ``function``(``input``, ``output``, ``session``)`` ``{`\
-`  ``dev_ggplot2_args`` ``<-`` `[`ggplot2_args`](https://insightsengineering.github.io/teal.widgets/reference/ggplot2_args.md)`(`\
+`  ``dev_ggplot2_args`` ``<-`` `[`ggplot2_args`](https://pharmaverse.github.io/teal.widgets/reference/ggplot2_args.md)`(`\
 `    labs ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``subtitle ``=`` ``"Dev substitle"``)``,`\
 `    theme ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``legend.position ``=`` ``"none"``)`\
 `  ``)`\
 \
-`  ``f_ggplot2_expr`` ``<-`` `[`parse_ggplot2_args`](https://insightsengineering.github.io/teal.widgets/reference/parse_ggplot2_args.md)`(`\
-`    `[`resolve_ggplot2_args`](https://insightsengineering.github.io/teal.widgets/reference/resolve_ggplot2_args.md)`(`\
+`  ``f_ggplot2_expr`` ``<-`` `[`parse_ggplot2_args`](https://pharmaverse.github.io/teal.widgets/reference/parse_ggplot2_args.md)`(`\
+`    `[`resolve_ggplot2_args`](https://pharmaverse.github.io/teal.widgets/reference/resolve_ggplot2_args.md)`(`\
 `      user_plot ``=`` ``user_ggplot2_args``$``plot1``,`\
 `      user_default ``=`` ``user_ggplot2_args``$``default``,`\
 `      module_plot ``=`` ``dev_ggplot2_args`\

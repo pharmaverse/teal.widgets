@@ -6,7 +6,7 @@ module which contains any `rtables` object. Arguments are validated to
 match their `rtables` equivalents.
 
 For more details see the vignette:
-[`vignette("custom-basic-table-arguments", package = "teal.widgets")`](https://insightsengineering.github.io/teal.widgets/articles/custom-basic-table-arguments.md).
+[`vignette("custom-basic-table-arguments", package = "teal.widgets")`](https://pharmaverse.github.io/teal.widgets/articles/custom-basic-table-arguments.md).
 
 ## Usage
 
@@ -27,10 +27,10 @@ basic_table_args(...)
 
 ## See also
 
-- [`resolve_basic_table_args()`](https://insightsengineering.github.io/teal.widgets/reference/resolve_basic_table_args.md)
+- [`resolve_basic_table_args()`](https://pharmaverse.github.io/teal.widgets/reference/resolve_basic_table_args.md)
   to resolve multiple objects into one using pre-defined priorities.
 
-- [`parse_basic_table_args()`](https://insightsengineering.github.io/teal.widgets/reference/parse_basic_table_args.md)
+- [`parse_basic_table_args()`](https://pharmaverse.github.io/teal.widgets/reference/parse_basic_table_args.md)
   to parse resolved list into list of calls.
 
 ## Examples

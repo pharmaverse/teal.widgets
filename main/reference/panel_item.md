@@ -2,7 +2,7 @@
 
 **\[deprecated\]**\
 Designed to be grouped using
-[`panel_group`](https://insightsengineering.github.io/teal.widgets/reference/panel_group.md)
+[`panel_group`](https://pharmaverse.github.io/teal.widgets/reference/panel_group.md)
 element. Used to handle `shiny` inputs in the encoding panel.
 
 ## Usage
@@ -61,12 +61,12 @@ panel_item(
 )
 #> <div class="accordion-item" data-value="Display">
 #>   <div class="accordion-header">
-#>     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bslib-accordion-panel-8722" aria-expanded="false" aria-controls="bslib-accordion-panel-8722">
+#>     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bslib-accordion-panel-3951" aria-expanded="false" aria-controls="bslib-accordion-panel-3951">
 #>       <div class="accordion-icon"></div>
 #>       <div class="accordion-title">Display</div>
 #>     </button>
 #>   </div>
-#>   <div id="bslib-accordion-panel-8722" class="accordion-collapse collapse">
+#>   <div id="bslib-accordion-panel-3951" class="accordion-collapse collapse">
 #>     <div class="accordion-body" open="TRUE">
 #>       <div id="check" class="form-group shiny-input-checkboxgroup shiny-input-container" role="group" aria-labelledby="check-label">
 #>         <label class="control-label" id="check-label" for="check">Tables display</label>

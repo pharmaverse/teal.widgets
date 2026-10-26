@@ -13,8 +13,8 @@
   `table_with_settings`. The download button of `table_with_settings`
   and `plot_with_settings` is now hidden, and a warning is shown, until
   the file name contains at least one letter or number
-  ([\#363](https://github.com/insightsengineering/teal.widgets/issues/363),
-  [\#365](https://github.com/insightsengineering/teal.widgets/issues/365)).
+  ([\#363](https://github.com/pharmaverse/teal.widgets/issues/363),
+  [\#365](https://github.com/pharmaverse/teal.widgets/issues/365)).
 
 ## teal.widgets 0.6.1
 
@@ -23,10 +23,10 @@ CRAN release: 2026-06-30
 #### Bug fixes
 
 - Fix snapshot failure during R CMD Check
-  ([\#341](https://github.com/insightsengineering/teal.widgets/issues/341)).
+  ([\#341](https://github.com/pharmaverse/teal.widgets/issues/341)).
 - Fixed problem with resize plot popup that does not render content with
   newer version of shiny
-  ([\#350](https://github.com/insightsengineering/teal.widgets/issues/350)).
+  ([\#350](https://github.com/pharmaverse/teal.widgets/issues/350)).
 
 #### Miscellaneous
 
@@ -39,7 +39,7 @@ CRAN release: 2026-02-24
 #### Enhancements
 
 - Added support for `gt` and `gtsummary` object to `table_with_settings`
-  ([\#337](https://github.com/insightsengineering/teal.widgets/issues/337))
+  ([\#337](https://github.com/pharmaverse/teal.widgets/issues/337))
 - `gt`, `gtsummary`, `xml2` and `rvest` packages were added to
   `Imports`.
 
@@ -50,7 +50,7 @@ CRAN release: 2025-12-02
 #### Miscellaneous
 
 - Improve unit test coverage
-  ([\#318](https://github.com/insightsengineering/teal.widgets/issues/318)).
+  ([\#318](https://github.com/pharmaverse/teal.widgets/issues/318)).
 
 ## teal.widgets 0.5.0
 
@@ -60,28 +60,28 @@ CRAN release: 2025-08-19
 
 - Improved the layout and appearance of the widgets using `bslib`
   components
-  ([\#288](https://github.com/insightsengineering/teal.widgets/issues/288)).
+  ([\#288](https://github.com/pharmaverse/teal.widgets/issues/288)).
 
 #### Breaking changes
 
-- [`panel_group()`](https://insightsengineering.github.io/teal.widgets/reference/panel_group.md)
+- [`panel_group()`](https://pharmaverse.github.io/teal.widgets/reference/panel_group.md)
   and
-  [`panel_item()`](https://insightsengineering.github.io/teal.widgets/reference/panel_item.md)
+  [`panel_item()`](https://pharmaverse.github.io/teal.widgets/reference/panel_item.md)
   are soft deprecated. Please use the
   [`bslib::accordion()`](https://rstudio.github.io/bslib/reference/accordion.html)
   and
   [`bslib::accordion_panel()`](https://rstudio.github.io/bslib/reference/accordion.html)
   instead.
-- [`nested_closeable_modal()`](https://insightsengineering.github.io/teal.widgets/reference/nested_closeable_modal.md)
+- [`nested_closeable_modal()`](https://pharmaverse.github.io/teal.widgets/reference/nested_closeable_modal.md)
   was soft deprecated.
 
 #### Bug fixes
 
 - Recompute the `live-search` option value dynamically in
   `updateOptionalSelectInput`
-  ([\#291](https://github.com/insightsengineering/teal.widgets/issues/291)).
+  ([\#291](https://github.com/pharmaverse/teal.widgets/issues/291)).
 - Fix bug where plot height reset after resizing
-  ([\#301](https://github.com/insightsengineering/teal.widgets/issues/301)).
+  ([\#301](https://github.com/pharmaverse/teal.widgets/issues/301)).
 
 ## teal.widgets 0.4.3
 
@@ -100,11 +100,11 @@ CRAN release: 2023-12-14
 #### Enhancements
 
 - Introduce
-  [`nested_closeable_modal()`](https://insightsengineering.github.io/teal.widgets/reference/nested_closeable_modal.md)
+  [`nested_closeable_modal()`](https://pharmaverse.github.io/teal.widgets/reference/nested_closeable_modal.md)
   that can create nested popups inside an already existing popup.
 - Replaces examples from `runApp` with `shinyApp`.
 - Ensure that
-  [`table_with_settings()`](https://insightsengineering.github.io/teal.widgets/reference/table_with_settings.md)
+  [`table_with_settings()`](https://pharmaverse.github.io/teal.widgets/reference/table_with_settings.md)
   is synchronized with the latest update of `rtables`, and updated the
   version dependency accordingly.
 

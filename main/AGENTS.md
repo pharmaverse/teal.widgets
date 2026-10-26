@@ -25,9 +25,9 @@ This package provides reusable `shiny` widgets for `teal` modules:
 - **Outputs** — plots and tables the user can resize and download
   (`plot_with_settings`, `table_with_settings`), configured through the
   settings pipeline
-  ([`ggplot2_args()`](https://insightsengineering.github.io/teal.widgets/reference/ggplot2_args.md)
+  ([`ggplot2_args()`](https://pharmaverse.github.io/teal.widgets/reference/ggplot2_args.md)
   /
-  [`basic_table_args()`](https://insightsengineering.github.io/teal.widgets/reference/basic_table_args.md)).
+  [`basic_table_args()`](https://pharmaverse.github.io/teal.widgets/reference/basic_table_args.md)).
 - **Inputs** — customized versions of `shiny`/`shinyWidgets` controls
   built for `teal`’s needs (`optionalSelectInput`,
   `optionalSliderInput`, `draggable_buckets`).
@@ -66,9 +66,9 @@ Packages it relies on:
   with one method per table class (`rtables`, `gt`, `gtsummary`,
   `tbl_split`).
 - **Plot and table settings.**
-  [`ggplot2_args()`](https://insightsengineering.github.io/teal.widgets/reference/ggplot2_args.md)
+  [`ggplot2_args()`](https://pharmaverse.github.io/teal.widgets/reference/ggplot2_args.md)
   and
-  [`basic_table_args()`](https://insightsengineering.github.io/teal.widgets/reference/basic_table_args.md)
+  [`basic_table_args()`](https://pharmaverse.github.io/teal.widgets/reference/basic_table_args.md)
   capture the options, `resolve_*()` merges them with the defaults
   (including the global `getOption("teal.ggplot2_args")` and
   `getOption("teal.basic_table_args")`), and `parse_*()` produces the
@@ -89,9 +89,9 @@ Packages it relies on:
   `export_table`, `render_table_to_html`, and `file_download_format`,
   instead of branching on class.
 - To change how plot or table settings are applied, edit
-  [`ggplot2_args()`](https://insightsengineering.github.io/teal.widgets/reference/ggplot2_args.md)
+  [`ggplot2_args()`](https://pharmaverse.github.io/teal.widgets/reference/ggplot2_args.md)
   /
-  [`basic_table_args()`](https://insightsengineering.github.io/teal.widgets/reference/basic_table_args.md),
+  [`basic_table_args()`](https://pharmaverse.github.io/teal.widgets/reference/basic_table_args.md),
   `resolve_*()`, and `parse_*()` together, since a setting flows through
   all three.
 - To add front-end assets, put the file in `inst/<widget>/` and register

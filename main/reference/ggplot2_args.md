@@ -6,7 +6,7 @@ graphics. The function arguments are validated to match their `ggplot2`
 equivalents.
 
 For more details see the vignette:
-[`vignette("custom-ggplot2-arguments", package = "teal.widgets")`](https://insightsengineering.github.io/teal.widgets/articles/custom-ggplot2-arguments.md).
+[`vignette("custom-ggplot2-arguments", package = "teal.widgets")`](https://pharmaverse.github.io/teal.widgets/articles/custom-ggplot2-arguments.md).
 
 ## Usage
 
@@ -36,10 +36,10 @@ ggplot2_args(labs = list(), theme = list())
 
 ## See also
 
-- [`resolve_ggplot2_args()`](https://insightsengineering.github.io/teal.widgets/reference/resolve_ggplot2_args.md)
+- [`resolve_ggplot2_args()`](https://pharmaverse.github.io/teal.widgets/reference/resolve_ggplot2_args.md)
   to resolve multiple objects into one using pre-defined priorities.
 
-- [`parse_ggplot2_args()`](https://insightsengineering.github.io/teal.widgets/reference/parse_ggplot2_args.md)
+- [`parse_ggplot2_args()`](https://pharmaverse.github.io/teal.widgets/reference/parse_ggplot2_args.md)
   to parse resolved list into list of calls.
 
 ## Examples
