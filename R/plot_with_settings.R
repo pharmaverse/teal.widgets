@@ -487,6 +487,7 @@ type_download_ui <- function(id) {
         label = "File name (without extension)",
         value = paste0("plot_", strftime(Sys.time(), format = "%Y%m%d_%H%M%S"))
       ),
+      uiOutput(ns("file_name_warning")),
       conditionalPanel(
         condition = paste0("input['", ns("file_name"), "'] != ''"),
         downloadButton(ns("data_download"), label = character(0), class = "btn-sm w-full")
@@ -500,6 +501,8 @@ type_download_srv <- function(id, plot_reactive, plot_type, plot_w, default_w, p
   moduleServer(
     id,
     function(input, output, session) {
+      file_name_valid <- file_name_validation_srv(input, output)
+
       output$data_download <- downloadHandler(
         filename = function() {
           paste(input$file_name, input$file_format, sep = ".")

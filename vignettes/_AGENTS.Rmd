@@ -1,0 +1,122 @@
+---
+# This file generates AGENTS.md in the package root.
+# It is not part of the package build or the pkgdown site.
+# To regenerate it, run from the package root:
+#   rmarkdown::render("vignettes/_AGENTS.Rmd", output_dir = ".", output_file = "AGENTS.md")
+output:
+  github_document:
+    html_preview: false
+params:
+  url: "https://raw.githubusercontent.com/insightsengineering/teal/refs/heads/main/SHARED_AGENTS.md"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# teal.widgets R Package Development Guide
+
+## Package Overview
+
+`teal.widgets` is part of the `teal` framework. It provides a set of reusable `shiny`
+widgets that `teal` modules use to build their interface: plot and table outputs with
+resizing and download buttons, layout helpers, and a few custom inputs. Each widget
+works on its own; there is no shared app, router, or state.
+
+All widgets are exported for `teal` module developers, in two forms:
+
+- **Full modules** are a `<name>_ui()` and `<name>_srv()` pair wired into your app's UI
+  and server, for example `plot_with_settings`, `table_with_settings`, and
+  `verbatim_popup`.
+- **Standalone functions** are called directly, with no server counterpart to wire up,
+  such as `optionalSelectInput`, `optionalSliderInput`, `draggable_buckets`,
+  `standard_layout`, `panel_group`, `white_small_well`, and `get_dt_rows`.
+
+## Development Context
+
+This package provides reusable `shiny` widgets for `teal` modules:
+
+- **Outputs** — plots and tables the user can resize and download
+  (`plot_with_settings`, `table_with_settings`), configured through the settings
+  pipeline (`ggplot2_args()` / `basic_table_args()`).
+- **Inputs** — customized versions of `shiny`/`shinyWidgets` controls built for
+  `teal`'s needs (`optionalSelectInput`, `optionalSliderInput`, `draggable_buckets`).
+- **Layout helpers** — arrange module UI (`standard_layout`, `panel_group`,
+  `white_small_well`) and display code or content in a modal (`verbatim_popup`,
+  `nested_closeable_modal`).
+
+### Relationships with other packages
+
+`teal.widgets` sits at the bottom of the framework. `teal` and the `teal.modules.*`
+packages depend on it, but it does not depend on any of them.
+
+Packages it relies on:
+
+- `shiny`, `htmltools`, and `bslib` for the UI and layout.
+- `shinyWidgets` and `shinyjs` for richer inputs and client-side behavior.
+- `rtables`, `gt`, and `gtsummary` for the table types it renders and exports.
+- `ggplot2` and base/grid graphics for plots.
+- `rvest` and `xml2` for reading and editing table HTML.
+- `checkmate` for input validation.
+- `webshot2` (a `Suggests`) is needed to download `gt`, `gtsummary`, or `tbl_split`
+  tables as PDF.
+
+### How plots and tables are handled
+
+- **Plots.** `plot_with_settings` works out the plot type on its own (`ggplot`,
+  lattice, `grob`, or base graphics), so it is not limited to `ggplot2`. Its `plot_r`
+  argument can be a `reactive` or a `function`; a `function` is only needed
+  when a base plot has to be captured for download.
+- **Tables.** `export_table`, `render_table_to_html`, and `file_download_format` (in
+  `R/table_with_settings.R`) use S3 dispatch, with one method per table class
+  (`rtables`, `gt`, `gtsummary`, `tbl_split`).
+- **Plot and table settings.** `ggplot2_args()` and `basic_table_args()` capture the
+  options, `resolve_*()` merges them with the defaults (including the global
+  `getOption("teal.ggplot2_args")` and `getOption("teal.basic_table_args")`), and
+  `parse_*()` produces the final code.
+- **Front-end.** CSS and JS files live in `inst/<widget>/` and are registered with
+  `htmltools::htmlDependency()`.
+
+### Workflows
+
+- Before fixing a bug, remember that `teal.widgets` is at the bottom of the framework,
+  so the cause is often somewhere else: in the `teal` module that calls the widget, or
+  in the package that produced the object being rendered (`rtables`, `gt`, `gtsummary`,
+  `ggplot2`). Confirm the problem is really here before changing widget code, and check
+  whether an issue already exists.
+- To support a new table type, add a method for the new class to each of
+  `export_table`, `render_table_to_html`, and `file_download_format`, instead of
+  branching on class.
+- To change how plot or table settings are applied, edit `ggplot2_args()` /
+  `basic_table_args()`, `resolve_*()`, and `parse_*()` together, since a setting flows
+  through all three.
+- To add front-end assets, put the file in `inst/<widget>/` and register it in the
+  widget's dependency function; do not inline a `tags$script`.
+- Run the full test suite before trusting a green run: set environment variable `TESTING_DEPTH=5`, because
+  the default of `3` skips the heavy `shinytest2` tests. Server and unit tests are in
+  `test-<widget>.R`; UI tests are in `test-<widget>_ui.R`.
+- Add a regression test when you fix a bug.
+
+```{r teal_content, echo=FALSE, results='asis'}
+# Append common shared instructions from teal framework
+common_agents_url <- params$url
+common_agents_path <- tempfile()
+download.file(url = common_agents_url, destfile = common_agents_path, quiet = TRUE)
+common_agents_shared <- readLines(common_agents_path)
+# remove section intended only for module packages
+remove_sections <- c("<!-- (Begins|Ends) Module Section")
+Reduce(
+  function(x, y) {
+    delim <- grep(y, x)
+    if (length(delim) == 0) {
+      return(x)
+    } else if (length(delim) != 2) {
+      stop("Section delimiters are not balanced")
+    }
+    x[-1 * seq(from = delim[1], to = delim[2])]
+  },
+  remove_sections,
+  init = common_agents_shared
+) |>
+  cat(sep = "\n")
+```

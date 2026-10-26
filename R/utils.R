@@ -40,3 +40,35 @@ apply_plot_modifications <- function(plot_obj, plot_type, dblclicking, ranges) {
 }
 
 .warnings_env <- new.env(parent = emptyenv())
+
+#' Validate the download file name
+#'
+#' Hides the `data_download` button and renders `output$file_name_warning` when `input$file_name`
+#' does not contain any letter or number, e.g. it is empty or only whitespace or special characters.
+#'
+#' @param input,output Shiny module `input` and `output` objects.
+#'
+#' @return `reactive` returning `TRUE` when the file name is valid.
+#'
+#' @noRd
+file_name_validation_srv <- function(input, output) {
+  file_name_valid <- reactive({
+    isTRUE(grepl("[[:alnum:]]", input$file_name))
+  })
+
+  observeEvent(file_name_valid(), {
+    shinyjs::toggle("data_download", condition = file_name_valid())
+  })
+
+  output$file_name_warning <- renderUI({
+    if (!file_name_valid()) {
+      helpText(
+        class = "error",
+        icon("triangle-exclamation"),
+        "Please provide a meaningful file name: it must contain at least one letter or number."
+      )
+    }
+  })
+
+  file_name_valid
+}

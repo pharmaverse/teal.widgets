@@ -214,7 +214,7 @@ export_table_raw <- function(x) {
   # xml_remove modifies the object so no need to ovewrite
   xml2::xml_remove(rvest::html_nodes(html_parsed, "caption, .gt_heading"))
 
-  tbl <- rvest::html_table(html_parsed, fill = TRUE)[[1]]
+  tbl <- rvest::html_table(html_parsed)[[1]]
   names(tbl) <- gsub("[\n\r\t]", " ", names(tbl))
   tbl
 }
@@ -373,6 +373,7 @@ type_download_ui_table <- function(id) {
         label = "File name (without extension)",
         value = paste0("table_", strftime(Sys.time(), format = "%Y%m%d_%H%M%S"))
       ),
+      uiOutput(ns("file_name_warning")),
       conditionalPanel(
         condition = paste0("input['", ns("file_format"), "'] != '.csv'"),
         tags$div(
@@ -434,6 +435,8 @@ type_download_srv_table <- function(id, table_reactive) {
           shinyjs::disable("lpp")
         }
       })
+
+      file_name_valid <- file_name_validation_srv(input, output)
 
       output$lpp_warning <- renderUI({
         table_obj <- table_reactive()
