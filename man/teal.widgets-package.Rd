@@ -13,9 +13,9 @@ functionality by additional inputs and output controls.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://insightsengineering.github.io/teal.widgets/}
-  \item \url{https://github.com/insightsengineering/teal.widgets}
-  \item Report bugs at \url{https://github.com/insightsengineering/teal.widgets/issues}
+  \item \url{https://pharmaverse.github.io/teal.widgets/}
+  \item \url{https://github.com/pharmaverse/teal.widgets}
+  \item Report bugs at \url{https://github.com/pharmaverse/teal.widgets/issues}
 }
 
 }
