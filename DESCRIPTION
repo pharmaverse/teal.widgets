@@ -11,7 +11,8 @@ Authors@R: c(
     person("Konrad", "Pagacz", role = "aut"),
     person("Junlue", "Zhao", role = "aut"),
     person("Dony", "Unardi", , "unardid@gene.com", role = c("aut", "cre")),
-    person("F. Hoffmann-La Roche AG", role = c("cph", "fnd"))
+    person("F. Hoffmann-La Roche AG", role = c("cph", "fnd")),
+    person("Appsilon Sp. z o.o.", email = "teal@appsilon.com", role = c("cph", "fnd"))
   )
 Description: Collection of 'shiny' widgets to support 'teal' applications.
     Enables the manipulation of application layout and plot or table
