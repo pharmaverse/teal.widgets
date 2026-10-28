@@ -94,19 +94,19 @@ standard_layout(
 #>           <div class="standard-layout-post-output"></div>
 #>         </div>
 #>       </div>
-#>       <aside id="bslib-sidebar-4243" class="sidebar" hidden data-resizable>
+#>       <aside id="bslib-sidebar-3816" class="sidebar" hidden data-resizable>
 #>         <div class="sidebar-content bslib-gap-spacing">
 #>           <div>
 #>             <div>
 #>               <label class="text-primary">Encodings</label>
 #>               <div class="accordion-item" data-value="Tests">
 #>                 <div class="accordion-header">
-#>                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bslib-accordion-panel-8135" aria-expanded="false" aria-controls="bslib-accordion-panel-8135">
+#>                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bslib-accordion-panel-6959" aria-expanded="false" aria-controls="bslib-accordion-panel-6959">
 #>                     <div class="accordion-icon"></div>
 #>                     <div class="accordion-title">Tests</div>
 #>                   </button>
 #>                 </div>
-#>                 <div id="bslib-accordion-panel-8135" class="accordion-collapse collapse">
+#>                 <div id="bslib-accordion-panel-6959" class="accordion-collapse collapse">
 #>                   <div class="accordion-body" open="FALSE">
 #>                     <div>
 #>                       <script>
@@ -142,7 +142,7 @@ standard_layout(
 #>           </div>
 #>         </div>
 #>       </aside>
-#>       <button class="collapse-toggle" type="button" title="Toggle sidebar" aria-expanded="true" aria-controls="bslib-sidebar-4243"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi bi-chevron-left collapse-icon" style="height:;width:;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img" ><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"></path></svg></button>
+#>       <button class="collapse-toggle" type="button" title="Toggle sidebar" aria-expanded="true" aria-controls="bslib-sidebar-3816"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi bi-chevron-left collapse-icon" style="height:;width:;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img" ><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"></path></svg></button>
 #>       <script data-bslib-sidebar-init>bslib.Sidebar.initCollapsibleAll()</script>
 #>     </div>
 #>   </div>

@@ -16,6 +16,14 @@
   ([\#363](https://github.com/pharmaverse/teal.widgets/issues/363),
   [\#365](https://github.com/pharmaverse/teal.widgets/issues/365)).
 
+#### Miscellaneous
+
+- teal.widgets has moved to the pharmaverse GitHub organisation:
+  <https://github.com/pharmaverse/teal.widgets>.
+- Appsilon becomes a core contributor and joins F. Hoffmann-La Roche AG
+  as a copyright holder of teal.widgets, working alongside the wider
+  contributor community.
+
 ## teal.widgets 0.6.1
 
 CRAN release: 2026-06-30

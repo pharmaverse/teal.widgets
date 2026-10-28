@@ -54,6 +54,13 @@ include:
 - `basic_table_args` for a standard `rtables` output table with graphic
   options
 
+teal.widgets is developed by [Roche](https://roche.com),
+[Appsilon](https://www.appsilon.com), and the wider open-source
+community. [Roche](https://roche.com) and
+[Appsilon](https://www.appsilon.com) are copyright holders of the
+project, which is hosted in the [pharmaverse](https://pharmaverse.org)
+GitHub organisation.
+
 ## Installation
 
 \
@@ -77,3 +84,14 @@ If you encounter a bug or you have a feature request - please file an
 issue. For questions, discussions and staying up to date, please use the
 “teal” channel in the [`pharmaverse` slack
 workspace](https://pharmaverse.slack.com).
+
+## Acknowledgment
+
+teal.widgets was created at [Roche](https://roche.com) and is developed
+together with [Appsilon](https://www.appsilon.com) and the wider
+open-source community. Thank you to everyone who has contributed code,
+reported an issue, improved the documentation, or built a module. To get
+involved, explore the [open
+issues](https://github.com/pharmaverse/teal.widgets/issues) or join the
+\#teal channel in the [pharmaverse
+Slack](https://pharmaverse.slack.com/).
