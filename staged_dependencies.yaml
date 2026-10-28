@@ -1,20 +1,20 @@
 ---
 current_repo:
-  repo: insightsengineering/teal.widgets
+  repo: pharmaverse/teal.widgets
   host: https://github.com
 upstream_repos:
-  insightsengineering/rtables:
-    repo: insightsengineering/rtables
+  pharmaverse/rtables:
+    repo: pharmaverse/rtables
     host: https://github.com
 downstream_repos:
-  insightsengineering/teal.slice:
-    repo: insightsengineering/teal.slice
+  pharmaverse/teal.slice:
+    repo: pharmaverse/teal.slice
     host: https://github.com
-  insightsengineering/teal.transform:
-    repo: insightsengineering/teal.transform
+  pharmaverse/teal.transform:
+    repo: pharmaverse/teal.transform
     host: https://github.com
-  insightsengineering/teal:
-    repo: insightsengineering/teal
+  pharmaverse/teal:
+    repo: pharmaverse/teal
     host: https://github.com
   insightsengineering/teal.modules.general:
     repo: insightsengineering/teal.modules.general

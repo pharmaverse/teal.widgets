@@ -11,15 +11,16 @@ Authors@R: c(
     person("Konrad", "Pagacz", role = "aut"),
     person("Junlue", "Zhao", role = "aut"),
     person("Dony", "Unardi", , "unardid@gene.com", role = c("aut", "cre")),
-    person("F. Hoffmann-La Roche AG", role = c("cph", "fnd"))
+    person("F. Hoffmann-La Roche AG", role = c("cph", "fnd")),
+    person("Appsilon Sp. z o.o.", email = "teal@appsilon.com", role = c("cph", "fnd"))
   )
 Description: Collection of 'shiny' widgets to support 'teal' applications.
     Enables the manipulation of application layout and plot or table
     settings.
 License: Apache License 2.0
-URL: https://insightsengineering.github.io/teal.widgets/,
-    https://github.com/insightsengineering/teal.widgets
-BugReports: https://github.com/insightsengineering/teal.widgets/issues
+URL: https://pharmaverse.github.io/teal.widgets/,
+    https://github.com/pharmaverse/teal.widgets
+BugReports: https://github.com/pharmaverse/teal.widgets/issues
 Depends:
     R (>= 3.6)
 Imports:
@@ -58,7 +59,7 @@ VignetteBuilder:
     rmarkdown
 Config/Needs/verdepcheck: rstudio/bslib, mllg/checkmate,
     tidyverse/ggplot2, rstudio/htmltools, r-lib/lifecycle,
-    insightsengineering/rtables, rstudio/shiny, daattali/shinyjs,
+    pharmaverse/rtables, rstudio/shiny, daattali/shinyjs,
     dreamRs/shinyWidgets, r-lib/styler, rstudio/webshot2, rstudio/DT,
     yihui/knitr, deepayan/lattice, tidyverse/magrittr, cran/png,
     tidyverse/rvest, rstudio/rmarkdown, rstudio/shinytest2,
