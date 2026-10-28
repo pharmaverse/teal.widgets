@@ -167,7 +167,7 @@ parse_ggplot2_args <- function(ggplot2_args = teal.widgets::ggplot2_args(),
     NULL
   }
 
-  theme_args <- ggplot2_args$theme
+  theme_args <- lapply(ggplot2_args$theme, theme_value_as_call)
 
   theme_f <- if (length(theme_args)) {
     as.call(c(list(quote(ggplot2::theme)), theme_args))
@@ -178,4 +178,24 @@ parse_ggplot2_args <- function(ggplot2_args = teal.widgets::ggplot2_args(),
   final_list <- Filter(Negate(is.null), list(labs = labs_f, ggtheme = default_theme, theme = theme_f))
   # For empty final_list we want to return empty list, not empty named list
   `if`(length(final_list) == 0, list(), final_list)
+}
+
+#' @noRd
+theme_value_as_call <- function(value) {
+  if (!inherits(value, "S7_object")) {
+    return(value)
+  }
+  if (inherits(value, "ggplot2::margin")) {
+    return(as.call(c(
+      list(quote(ggplot2::margin)),
+      as.list(as.numeric(value)),
+      list(unit = grid::unitType(value)[1])
+    )))
+  }
+  constructor <- str2lang(class(value)[1])
+  constructor_args <- names(formals(eval(constructor)))
+  properties <- getExportedValue("S7", "props")(value)
+  properties <- properties[intersect(names(properties), constructor_args)]
+  properties <- Filter(Negate(is.null), lapply(properties, theme_value_as_call))
+  as.call(c(list(constructor), properties))
 }
