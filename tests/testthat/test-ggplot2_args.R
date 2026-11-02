@@ -301,3 +301,41 @@ testthat::test_that(
     }
   }
 )
+
+testthat::test_that("parse_ggplot2_args preserves already-quoted theme calls unchanged", {
+  parsed <- parse_ggplot2_args(
+    ggplot2_args(theme = list(text = quote(ggplot2::element_text(size = 20))))
+  )
+  testthat::expect_identical(
+    parsed$theme,
+    quote(ggplot2::theme(text = ggplot2::element_text(size = 20)))
+  )
+})
+
+testthat::test_that("parse_ggplot2_args handles element_rect", {
+  parsed <- parse_ggplot2_args(
+    ggplot2_args(theme = list(panel.background = ggplot2::element_rect(fill = "blue", colour = "black")))
+  )
+  result <- eval(parse(text = deparse(parsed$theme)))
+  testthat::expect_identical(result$panel.background$fill, "blue")
+  testthat::expect_identical(result$panel.background$colour, "black")
+})
+
+testthat::test_that("parse_ggplot2_args handles element_text with custom margin", {
+  parsed <- parse_ggplot2_args(
+    ggplot2_args(
+      theme = list(title = ggplot2::element_text(size = 14, margin = ggplot2::margin(5, 10, 5, 10)))
+    )
+  )
+  result <- eval(parse(text = deparse(parsed$theme)))
+  testthat::expect_identical(result$title$size, 14)
+  testthat::expect_equal(as.numeric(result$title$margin), c(5, 10, 5, 10))
+})
+
+testthat::test_that("parse_ggplot2_args handles rel() in theme", {
+  parsed <- parse_ggplot2_args(
+    ggplot2_args(theme = list(text = ggplot2::element_text(size = ggplot2::rel(1.5))))
+  )
+  result <- eval(parse(text = deparse(parsed$theme)))
+  testthat::expect_identical(result$text$size, ggplot2::rel(1.5))
+})
