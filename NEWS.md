@@ -8,6 +8,11 @@
 
 * Fixed PDF download of `gt` and `gtsummary` tables in `table_with_settings`. The download button of `table_with_settings` and `plot_with_settings` is now hidden, and a warning is shown, until the file name contains at least one letter or number (#363, #365).
 
+### Miscellaneous
+
+* teal.widgets has moved to the pharmaverse GitHub organisation: https://github.com/pharmaverse/teal.widgets.
+* Appsilon becomes a core contributor and joins F. Hoffmann-La Roche AG as a copyright holder of teal.widgets, working alongside the wider contributor community.
+
 # teal.widgets 0.6.1
 
 ### Bug fixes
