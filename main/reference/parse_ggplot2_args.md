@@ -43,7 +43,7 @@ parse_ggplot2_args(
 #> ggplot2::labs(title = "TITLE")
 #> 
 #> $theme
-#> ggplot2::theme(title = <object>)
+#> ggplot2::theme(title = ggplot2::element_text(size = 20, inherit.blank = FALSE))
 #> 
 
 parse_ggplot2_args(
@@ -62,6 +62,6 @@ parse_ggplot2_args(
 #> ggplot2::theme_gray()
 #> 
 #> $theme
-#> ggplot2::theme(title = <object>)
+#> ggplot2::theme(title = ggplot2::element_text(size = 20, inherit.blank = FALSE))
 #> 
 ```
