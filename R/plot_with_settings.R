@@ -618,6 +618,9 @@ get_plot_dpi <- function() {
 #' @keywords internal
 #'
 print_plot <- function(plot, plot_type) {
+  if (!requireNamespace("grid")) {
+    stop("package grid should be installed to use this function", .call = FALSE)
+  }
   switch(plot_type(),
     "grob" = grid::grid.draw(plot()),
     "other" = {

@@ -9,6 +9,9 @@
 #'
 #' @keywords internal
 apply_plot_modifications <- function(plot_obj, plot_type, dblclicking, ranges) {
+  if (!requireNamespace("grid")) {
+    stop("package grid should be installed to use this function", .call = FALSE)
+  }
   if (plot_type == "gg" && dblclicking) {
     plot_obj +
       ggplot2::coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE)

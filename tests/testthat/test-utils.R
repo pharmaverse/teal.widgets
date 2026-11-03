@@ -23,6 +23,7 @@ testthat::test_that("apply_plot_modifications, Modify ggplot object with dblclic
 })
 
 testthat::test_that("apply_plot_modifications, Modify grob object", {
+  testthat::skip_if_not_installed("grid")
   grob_obj <- grid::rectGrob()
   modified_grob <- apply_plot_modifications(
     plot_obj = grob_obj,
