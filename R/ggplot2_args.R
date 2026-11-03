@@ -182,7 +182,7 @@ parse_ggplot2_args <- function(ggplot2_args = teal.widgets::ggplot2_args(),
 
 #' @noRd
 theme_value_as_call <- function(value) {
-  if (!requireNamespace("grid")) {
+  if (!requireNamespace("grid", quietly = TRUE)) {
     stop("package grid should be installed to use this function", .call = FALSE)
   }
   if (!inherits(value, "S7_object")) {

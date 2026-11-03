@@ -9,7 +9,7 @@
 #'
 #' @keywords internal
 apply_plot_modifications <- function(plot_obj, plot_type, dblclicking, ranges) {
-  if (!requireNamespace("grid")) {
+  if (!requireNamespace("grid", quietly = TRUE)) {
     stop("package grid should be installed to use this function", .call = FALSE)
   }
   if (plot_type == "gg" && dblclicking) {
