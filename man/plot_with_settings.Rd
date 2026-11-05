@@ -220,4 +220,37 @@ if (interactive()) {
   shinyApp(ui, server)
 }
 \dontshow{\}) # examplesIf}
+\dontshow{if (requireNamespace("canvasXpress", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+# Example rendering an interactive htmlwidget (CanvasXpress) instead of a
+# static plot. Any `htmlwidget` object returned by `plot_r` is rendered
+# through the widget's own shiny binding; height/width and HTML download work.
+library(shiny)
+library(canvasXpress)
+
+ui <- bslib::page_fluid(
+  plot_with_settings_ui(id = "plot_with_settings")
+)
+
+server <- function(input, output, session) {
+  plot_r <- reactive({
+    canvasXpress(
+      data = as.matrix(mtcars[, c("mpg", "hp")]),
+      graphType = "Scatter2D",
+      xAxis = list("mpg"),
+      yAxis = list("hp"),
+      title = "Interactive CanvasXpress scatter"
+    )
+  })
+
+  plot_with_settings_srv(
+    id = "plot_with_settings",
+    plot_r = plot_r,
+    height = c(500, 200, 1200)
+  )
+}
+
+if (interactive()) {
+  shinyApp(ui, server)
+}
+\dontshow{\}) # examplesIf}
 }

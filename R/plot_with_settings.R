@@ -252,6 +252,39 @@ plot_with_settings_ui <- function(id) {
 #'   shinyApp(ui, server)
 #' }
 #'
+#' @examplesIf requireNamespace("canvasXpress", quietly = TRUE)
+#' # Example rendering an interactive htmlwidget (CanvasXpress) instead of a
+#' # static plot. Any `htmlwidget` object returned by `plot_r` is rendered
+#' # through the widget's own shiny binding; height/width and HTML download work.
+#' library(shiny)
+#' library(canvasXpress)
+#'
+#' ui <- bslib::page_fluid(
+#'   plot_with_settings_ui(id = "plot_with_settings")
+#' )
+#'
+#' server <- function(input, output, session) {
+#'   plot_r <- reactive({
+#'     canvasXpress(
+#'       data = as.matrix(mtcars[, c("mpg", "hp")]),
+#'       graphType = "Scatter2D",
+#'       xAxis = list("mpg"),
+#'       yAxis = list("hp"),
+#'       title = "Interactive CanvasXpress scatter"
+#'     )
+#'   })
+#'
+#'   plot_with_settings_srv(
+#'     id = "plot_with_settings",
+#'     plot_r = plot_r,
+#'     height = c(500, 200, 1200)
+#'   )
+#' }
+#'
+#' if (interactive()) {
+#'   shinyApp(ui, server)
+#' }
+#'
 plot_with_settings_srv <- function(id,
                                    plot_r,
                                    height = c(600, 200, 2000),
@@ -308,7 +341,9 @@ plot_with_settings_srv <- function(id,
     }
 
     plot_type <- reactive({
-      if (inherits(plot_r(), "ggplot")) {
+      if (inherits(plot_r(), "htmlwidget")) {
+        "widget"
+      } else if (inherits(plot_r(), "ggplot")) {
         "gg"
       } else if (inherits(plot_r(), "trellis")) {
         "trel"
@@ -394,31 +429,60 @@ plot_with_settings_srv <- function(id,
       }
     )
     output$plot_main <- renderPlot(
-      apply_plot_modifications(
-        plot_obj = plot_r(),
-        plot_type = plot_type(),
-        dblclicking = dblclicking,
-        ranges = ranges
-      ),
+      {
+        # `htmlwidget` plots render through output$widget_main, not renderPlot.
+        req(!identical(plot_type(), "widget"))
+        apply_plot_modifications(
+          plot_obj = plot_r(),
+          plot_type = plot_type(),
+          dblclicking = dblclicking,
+          ranges = ranges
+        )
+      },
       res = get_plot_dpi(),
       height = p_height,
       width = p_width
     )
 
+    # Render path for `htmlwidget` objects (e.g. canvasXpress, plotly). These
+    # are self-contained interactive widgets rather than static R graphics, so
+    # they use the htmlwidgets shiny binding instead of renderPlot/plotOutput.
+    # The widget's class/package name drives the correct JS output binding.
+    output$widget_main <- htmlwidgets::shinyRenderWidget(
+      quote(plot_r()),
+      htmlwidgets::shinyWidgetOutput,
+      environment(),
+      quoted = TRUE
+    )
+
     output$plot_out_main <- renderUI({
       req(plot_r())
-      tags$div(
-        align = graph_align,
-        plotOutput(
-          ns("plot_main"),
-          height = "100%",
-          width = p_width(),
-          brush = `if`(brushing, brushOpts(ns("plot_brush"), resetOnNew = FALSE), NULL),
-          click = `if`(clicking, clickOpts(ns("plot_click")), NULL),
-          dblclick = `if`(dblclicking, dblclickOpts(ns("plot_dblclick")), NULL),
-          hover = `if`(hovering, hoverOpts(ns("plot_hover")), NULL)
+      if (identical(plot_type(), "widget")) {
+        widget_name <- class(plot_r())[[1L]]
+        tags$div(
+          align = graph_align,
+          htmlwidgets::shinyWidgetOutput(
+            ns("widget_main"),
+            name = widget_name,
+            package = widget_name,
+            width = `if`(is.numeric(p_width()), paste0(p_width(), "px"), p_width()),
+            height = paste0(p_height(), "px")
+          )
         )
-      )
+      } else {
+        tags$div(
+          align = graph_align,
+          plotOutput(
+            ns("plot_main"),
+            height = "100%",
+            width = p_width(),
+            brush = `if`(brushing, brushOpts(ns("plot_brush"), resetOnNew = FALSE), NULL),
+            click = `if`(clicking, clickOpts(ns("plot_click")), NULL),
+            dblclick = `if`(dblclicking, dblclickOpts(ns("plot_dblclick")), NULL),
+            hover = `if`(hovering, hoverOpts(ns("plot_hover")), NULL)
+          )
+        )
+      }
     })
 
     output$width_warning <- renderUI({
@@ -505,9 +569,16 @@ type_download_srv <- function(id, plot_reactive, plot_type, plot_w, default_w, p
 
       output$data_download <- downloadHandler(
         filename = function() {
-          paste(input$file_name, input$file_format, sep = ".")
+          # Interactive htmlwidgets download as a self-contained HTML file.
+          ext <- `if`(identical(plot_type(), "widget"), "html", input$file_format)
+          paste(input$file_name, ext, sep = ".")
         },
         content = function(file) {
+          if (identical(plot_type(), "widget")) {
+            htmlwidgets::saveWidget(plot_reactive(), file, selfcontained = TRUE)
+            return(invisible(NULL))
+          }
+
           width <- `if`(!is.null(plot_w()), plot_w(), default_w())
           height <- `if`(!is.null(plot_h()), plot_h(), default_h())
 

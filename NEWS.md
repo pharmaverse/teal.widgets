@@ -3,6 +3,7 @@
 ### Enhancements
 
 * Added support for `tbl_split` object from `gtsummary` package to `table_with_settings`.
+* `plot_with_settings` now renders interactive `htmlwidget` objects (e.g. `canvasXpress`, `plotly`) in addition to static plots, using the widget's own shiny binding. Height and width settings apply and download produces a self-contained HTML file.
 
 ### Bug fixes
 
