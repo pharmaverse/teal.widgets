@@ -319,6 +319,8 @@ plot_with_settings_ui <- function(id) {
 #'       graphType = "Boxplot",
 #'       groupingFactors = list("species"),
 #'       yAxis = list("bill_length_mm"),
+#'       showBoxplotOriginalData = TRUE,
+#'       jitter = TRUE,
 #'       title = "Palmer penguins - bill length by species"
 #'     )),
 #'     height = c(340, 150, 1200)
