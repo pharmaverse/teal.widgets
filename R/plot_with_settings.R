@@ -443,6 +443,18 @@ plot_with_settings_srv <- function(id,
         once = TRUE,
         ignoreNULL = TRUE
       )
+      # `htmlwidget` plots render through output$widget_main, so the static
+      # `plot_main` output (and its reported width) never exists and the block
+      # above never fires -- leaving default_slider_width NULL and the resize
+      # sliders unrendered (req() in output$slider_ui). Seed the range from the
+      # measured container width instead when it is still unset. For static
+      # plots this is harmless: the plot_main handler above still overwrites it
+      # with the plot width on load.
+      observeEvent(delayed_flex_width(), {
+        if (is.null(default_slider_width()) && isTRUE(delayed_flex_width() > 0)) {
+          default_slider_width(delayed_flex_width() * c(1, 0.5, 2.8))
+        }
+      }, ignoreNULL = TRUE)
     }
 
     plot_type <- reactive({
