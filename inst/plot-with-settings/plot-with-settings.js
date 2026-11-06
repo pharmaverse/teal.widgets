@@ -32,11 +32,22 @@ var tealWidgetsCx = function (outputId) {
   } catch (e) { return null; }
 };
 
-// Rewire the module download control to export the CanvasXpress chart as a PNG
-// (cx.print()) rather than downloading the widget HTML. Capture-phase so it
-// runs before shiny's download-link handler.
+// Rewire the module download control so the selected file type (png / svg / pdf)
+// is exported through the CanvasXpress chart's own export (cx.print / saveSVG /
+// savePDF) using the chosen file name, rather than downloading the widget HTML.
+// Capture-phase so it runs before shiny's download-link handler.
 var tealWidgetsBindWidgetDownload = function (outputId, downloadLinkId) {
   var tries = 0;
+  var base = downloadLinkId.replace(/-data_download$/, "");
+  var selectedFormat = function () {
+    var grp = document.getElementById(base + "-file_format");
+    var checked = grp ? grp.querySelector("input[type=radio]:checked") : null;
+    return checked ? checked.value : "png";
+  };
+  var fileName = function () {
+    var inp = document.getElementById(base + "-file_name");
+    return (inp && inp.value) ? inp.value : null;
+  };
   (function bind() {
     var dl = document.getElementById(downloadLinkId);
     if (!dl) { if (tries++ < 50) { setTimeout(bind, 100); } return; }
@@ -44,34 +55,20 @@ var tealWidgetsBindWidgetDownload = function (outputId, downloadLinkId) {
     dl.setAttribute("data-cx-bound", "1");
     dl.addEventListener("click", function (e) {
       var cx = tealWidgetsCx(outputId);
-      // Only take over the download for CanvasXpress charts; any other
-      // htmlwidget falls through to shiny's existing (HTML) download handler.
-      if (cx && cx.print) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        cx.print();
+      // Any non-CanvasXpress htmlwidget falls through to shiny's HTML download.
+      if (!cx || !cx.print) { return; }
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      var name = fileName();
+      var fmt = selectedFormat();
+      if (fmt === "svg" && cx.saveSVG) {
+        cx.saveSVG(null, name);
+      } else if (fmt === "pdf" && cx.savePDF) {
+        cx.savePDF(null, name);
+      } else {
+        cx.print(null, name);
       }
     }, true);
-    // The file-format (png/pdf/svg) and file-name controls do not apply to the
-    // CanvasXpress PNG export, so hide them, leaving a clean download action.
-    var base = downloadLinkId.replace(/-data_download$/, "");
-    ["-file_format", "-file_name", "-file_name_warning"].forEach(function (suffix) {
-      var node = document.getElementById(base + suffix);
-      var wrap = node && node.closest ? node.closest(".form-group, .shiny-input-container") : null;
-      if (wrap) { wrap.style.display = "none"; } else if (node) { node.style.display = "none"; }
-    });
-    // The download button is disabled (pointer-events: none) until the hidden
-    // file-name field is valid; a PNG export needs no name, so keep it enabled
-    // and clickable. Re-apply if shiny toggles the class back on.
-    var enable = function () {
-      if (dl.classList.contains("disabled")) { dl.classList.remove("disabled"); }
-      dl.removeAttribute("aria-disabled");
-      dl.style.pointerEvents = "auto";
-    };
-    enable();
-    try {
-      new MutationObserver(enable).observe(dl, { attributes: true, attributeFilter: ["class"] });
-    } catch (e) { /* no-op */ }
   })();
 };
 
