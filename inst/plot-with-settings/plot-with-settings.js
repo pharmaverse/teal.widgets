@@ -60,6 +60,18 @@ var tealWidgetsBindWidgetDownload = function (outputId, downloadLinkId) {
       var wrap = node && node.closest ? node.closest(".form-group, .shiny-input-container") : null;
       if (wrap) { wrap.style.display = "none"; } else if (node) { node.style.display = "none"; }
     });
+    // The download button is disabled (pointer-events: none) until the hidden
+    // file-name field is valid; a PNG export needs no name, so keep it enabled
+    // and clickable. Re-apply if shiny toggles the class back on.
+    var enable = function () {
+      if (dl.classList.contains("disabled")) { dl.classList.remove("disabled"); }
+      dl.removeAttribute("aria-disabled");
+      dl.style.pointerEvents = "auto";
+    };
+    enable();
+    try {
+      new MutationObserver(enable).observe(dl, { attributes: true, attributeFilter: ["class"] });
+    } catch (e) { /* no-op */ }
   })();
 };
 
