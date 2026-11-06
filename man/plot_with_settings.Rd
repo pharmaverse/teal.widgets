@@ -299,4 +299,63 @@ if (interactive()) {
   shinyApp(ui, server)
 }
 \dontshow{\}) # examplesIf}
+\dontshow{if (requireNamespace("canvasXpress", quietly = TRUE) && requireNamespace("palmerpenguins", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+# Example letting CanvasXpress's built-in AI choose the visualisation from the
+# data and a plain-English prompt - no `graphType` or axes supplied. The chart
+# is still an `htmlwidget`, so it renders, resizes and downloads through
+# `plot_with_settings` like any other plot.
+# Note: the prompt is resolved by the CanvasXpress AI service, so this example
+# needs network access the first time the chart is built.
+library(shiny)
+library(canvasXpress)
+
+pg <- as.data.frame(na.omit(palmerpenguins::penguins))
+
+ui <- bslib::page_fluid(
+  tags$div(
+    style = paste(
+      "max-width:1100px; margin:16px auto; padding:12px 16px;",
+      "border:1px solid #e0e0e0; border-radius:8px; background:#f7fbfd;",
+      "font-family:sans-serif;"
+    ),
+    tags$h4(style = "margin:0 0 6px 0;", "Describe the chart in plain English"),
+    tags$p(
+      style = "margin:0;",
+      "Each plot was produced from the penguins data and a prompt - ",
+      "CanvasXpress picks the graph type, encodings and fits for you."
+    )
+  ),
+  tags$div(
+    style = "display:flex; gap:16px; max-width:1100px; margin:0 auto;",
+    tags$div(style = "flex:1;", plot_with_settings_ui(id = "ai1")),
+    tags$div(style = "flex:1;", plot_with_settings_ui(id = "ai2"))
+  )
+)
+
+server <- function(input, output, session) {
+  plot_with_settings_srv(
+    id = "ai1",
+    plot_r = reactive(canvasXpress(
+      data = pg,
+      prompt = "Suggest a graph for the penguins dataset"
+    )),
+    height = c(500, 200, 1400)
+  )
+  plot_with_settings_srv(
+    id = "ai2",
+    plot_r = reactive(canvasXpress(
+      data = pg,
+      prompt = paste(
+        "Create a scatter plot of bill_depth_mm vs body_mass_g",
+        "and color by species"
+      )
+    )),
+    height = c(500, 200, 1400)
+  )
+}
+
+if (interactive()) {
+  shinyApp(ui, server)
+}
+\dontshow{\}) # examplesIf}
 }
