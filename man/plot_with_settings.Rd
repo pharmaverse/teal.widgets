@@ -220,4 +220,144 @@ if (interactive()) {
   shinyApp(ui, server)
 }
 \dontshow{\}) # examplesIf}
+\dontshow{if (requireNamespace("canvasXpress", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+# Example rendering interactive htmlwidget (CanvasXpress) plots instead of
+# static plots. Any `htmlwidget` object returned by `plot_r` is rendered
+# through the widget's own shiny binding. For CanvasXpress charts the download
+# exports the selected file type (PNG/SVG/PDF) and the card expand button
+# toggles CanvasXpress full-screen.
+# Try: hover the top of a chart for its toolbar, click an element to select
+# it, and click empty space (or press ESC) to reset.
+library(shiny)
+library(canvasXpress)
+
+ir <- iris
+
+ui <- bslib::page_fluid(
+  tags$div(
+    style = paste(
+      "max-width:1100px; margin:16px auto; padding:12px 16px;",
+      "border:1px solid #e0e0e0; border-radius:8px; background:#f7fbfd;",
+      "font-family:sans-serif;"
+    ),
+    tags$h4(style = "margin:0 0 6px 0;", "Try the interactive CanvasXpress features"),
+    tags$ul(
+      style = "margin:0; padding-left:20px; line-height:1.6;",
+      tags$li(tags$b("Hover the top of any chart"), " to reveal the toolbar."),
+      tags$li(tags$b("Click an element"), " (a point, bar or box) to select it."),
+      tags$li(tags$b("Click empty space"), " - or press ", tags$kbd("ESC"), " - to reset.")
+    )
+  ),
+  tags$div(
+    style = "display:flex; gap:16px; max-width:1100px; margin:0 auto;",
+    tags$div(style = "flex:1;", plot_with_settings_ui(id = "scatter")),
+    tags$div(
+      style = "flex:1; display:flex; flex-direction:column; gap:16px;",
+      plot_with_settings_ui(id = "hist"),
+      plot_with_settings_ui(id = "box")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  plot_with_settings_srv(
+    id = "scatter",
+    plot_r = reactive(canvasXpress(
+      data = ir,
+      graphType = "Scatter2D",
+      xAxis = list("Petal.Length"),
+      yAxis = list("Petal.Width"),
+      colorBy = "Species",
+      title = "Iris - petal length vs petal width"
+    )),
+    height = c(778, 200, 1400)
+  )
+  plot_with_settings_srv(
+    id = "hist",
+    plot_r = reactive(canvasXpress(
+      data = ir["Petal.Length"],
+      graphType = "Histogram",
+      xAxis = list("Petal.Length"),
+      title = "Iris - petal length histogram"
+    )),
+    height = c(340, 150, 1200)
+  )
+  plot_with_settings_srv(
+    id = "box",
+    plot_r = reactive(canvasXpress(
+      data = ir,
+      graphType = "Boxplot",
+      groupingFactors = list("Species"),
+      yAxis = list("Petal.Length"),
+      showBoxplotOriginalData = TRUE,
+      jitter = TRUE,
+      title = "Iris - petal length by species"
+    )),
+    height = c(340, 150, 1200)
+  )
+}
+
+if (interactive()) {
+  shinyApp(ui, server)
+}
+\dontshow{\}) # examplesIf}
+\dontshow{if (requireNamespace("canvasXpress", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+# Example letting CanvasXpress's built-in AI choose the visualisation from the
+# data and a plain-English prompt - no `graphType` or axes supplied. The chart
+# is still an `htmlwidget`, so it renders, resizes and downloads through
+# `plot_with_settings` like any other plot.
+# Note: the prompt is resolved by the CanvasXpress AI service, so this example
+# needs network access the first time the chart is built.
+library(shiny)
+library(canvasXpress)
+
+ir <- iris
+
+ui <- bslib::page_fluid(
+  tags$div(
+    style = paste(
+      "max-width:1100px; margin:16px auto; padding:12px 16px;",
+      "border:1px solid #e0e0e0; border-radius:8px; background:#f7fbfd;",
+      "font-family:sans-serif;"
+    ),
+    tags$h4(style = "margin:0 0 6px 0;", "Describe the chart in plain English"),
+    tags$p(
+      style = "margin:0;",
+      "Each plot was produced from the iris data and a prompt - ",
+      "CanvasXpress picks the graph type, encodings and fits for you."
+    )
+  ),
+  tags$div(
+    style = "display:flex; gap:16px; max-width:1100px; margin:0 auto;",
+    tags$div(style = "flex:1;", plot_with_settings_ui(id = "ai1")),
+    tags$div(style = "flex:1;", plot_with_settings_ui(id = "ai2"))
+  )
+)
+
+server <- function(input, output, session) {
+  plot_with_settings_srv(
+    id = "ai1",
+    plot_r = reactive(canvasXpress(
+      data = ir,
+      prompt = "Suggest a graph for the iris dataset"
+    )),
+    height = c(500, 200, 1400)
+  )
+  plot_with_settings_srv(
+    id = "ai2",
+    plot_r = reactive(canvasXpress(
+      data = ir,
+      prompt = paste(
+        "Create a scatter plot of Sepal.Length vs Petal.Length",
+        "and color by Species"
+      )
+    )),
+    height = c(500, 200, 1400)
+  )
+}
+
+if (interactive()) {
+  shinyApp(ui, server)
+}
+\dontshow{\}) # examplesIf}
 }

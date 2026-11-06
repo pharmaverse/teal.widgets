@@ -252,6 +252,146 @@ plot_with_settings_ui <- function(id) {
 #'   shinyApp(ui, server)
 #' }
 #'
+#' @examplesIf requireNamespace("canvasXpress", quietly = TRUE)
+#' # Example rendering interactive htmlwidget (CanvasXpress) plots instead of
+#' # static plots. Any `htmlwidget` object returned by `plot_r` is rendered
+#' # through the widget's own shiny binding. For CanvasXpress charts the download
+#' # exports the selected file type (PNG/SVG/PDF) and the card expand button
+#' # toggles CanvasXpress full-screen.
+#' # Try: hover the top of a chart for its toolbar, click an element to select
+#' # it, and click empty space (or press ESC) to reset.
+#' library(shiny)
+#' library(canvasXpress)
+#'
+#' ir <- iris
+#'
+#' ui <- bslib::page_fluid(
+#'   tags$div(
+#'     style = paste(
+#'       "max-width:1100px; margin:16px auto; padding:12px 16px;",
+#'       "border:1px solid #e0e0e0; border-radius:8px; background:#f7fbfd;",
+#'       "font-family:sans-serif;"
+#'     ),
+#'     tags$h4(style = "margin:0 0 6px 0;", "Try the interactive CanvasXpress features"),
+#'     tags$ul(
+#'       style = "margin:0; padding-left:20px; line-height:1.6;",
+#'       tags$li(tags$b("Hover the top of any chart"), " to reveal the toolbar."),
+#'       tags$li(tags$b("Click an element"), " (a point, bar or box) to select it."),
+#'       tags$li(tags$b("Click empty space"), " - or press ", tags$kbd("ESC"), " - to reset.")
+#'     )
+#'   ),
+#'   tags$div(
+#'     style = "display:flex; gap:16px; max-width:1100px; margin:0 auto;",
+#'     tags$div(style = "flex:1;", plot_with_settings_ui(id = "scatter")),
+#'     tags$div(
+#'       style = "flex:1; display:flex; flex-direction:column; gap:16px;",
+#'       plot_with_settings_ui(id = "hist"),
+#'       plot_with_settings_ui(id = "box")
+#'     )
+#'   )
+#' )
+#'
+#' server <- function(input, output, session) {
+#'   plot_with_settings_srv(
+#'     id = "scatter",
+#'     plot_r = reactive(canvasXpress(
+#'       data = ir,
+#'       graphType = "Scatter2D",
+#'       xAxis = list("Petal.Length"),
+#'       yAxis = list("Petal.Width"),
+#'       colorBy = "Species",
+#'       title = "Iris - petal length vs petal width"
+#'     )),
+#'     height = c(778, 200, 1400)
+#'   )
+#'   plot_with_settings_srv(
+#'     id = "hist",
+#'     plot_r = reactive(canvasXpress(
+#'       data = ir["Petal.Length"],
+#'       graphType = "Histogram",
+#'       xAxis = list("Petal.Length"),
+#'       title = "Iris - petal length histogram"
+#'     )),
+#'     height = c(340, 150, 1200)
+#'   )
+#'   plot_with_settings_srv(
+#'     id = "box",
+#'     plot_r = reactive(canvasXpress(
+#'       data = ir,
+#'       graphType = "Boxplot",
+#'       groupingFactors = list("Species"),
+#'       yAxis = list("Petal.Length"),
+#'       showBoxplotOriginalData = TRUE,
+#'       jitter = TRUE,
+#'       title = "Iris - petal length by species"
+#'     )),
+#'     height = c(340, 150, 1200)
+#'   )
+#' }
+#'
+#' if (interactive()) {
+#'   shinyApp(ui, server)
+#' }
+#'
+#' @examplesIf requireNamespace("canvasXpress", quietly = TRUE)
+#' # Example letting CanvasXpress's built-in AI choose the visualisation from the
+#' # data and a plain-English prompt - no `graphType` or axes supplied. The chart
+#' # is still an `htmlwidget`, so it renders, resizes and downloads through
+#' # `plot_with_settings` like any other plot.
+#' # Note: the prompt is resolved by the CanvasXpress AI service, so this example
+#' # needs network access the first time the chart is built.
+#' library(shiny)
+#' library(canvasXpress)
+#'
+#' ir <- iris
+#'
+#' ui <- bslib::page_fluid(
+#'   tags$div(
+#'     style = paste(
+#'       "max-width:1100px; margin:16px auto; padding:12px 16px;",
+#'       "border:1px solid #e0e0e0; border-radius:8px; background:#f7fbfd;",
+#'       "font-family:sans-serif;"
+#'     ),
+#'     tags$h4(style = "margin:0 0 6px 0;", "Describe the chart in plain English"),
+#'     tags$p(
+#'       style = "margin:0;",
+#'       "Each plot was produced from the iris data and a prompt - ",
+#'       "CanvasXpress picks the graph type, encodings and fits for you."
+#'     )
+#'   ),
+#'   tags$div(
+#'     style = "display:flex; gap:16px; max-width:1100px; margin:0 auto;",
+#'     tags$div(style = "flex:1;", plot_with_settings_ui(id = "ai1")),
+#'     tags$div(style = "flex:1;", plot_with_settings_ui(id = "ai2"))
+#'   )
+#' )
+#'
+#' server <- function(input, output, session) {
+#'   plot_with_settings_srv(
+#'     id = "ai1",
+#'     plot_r = reactive(canvasXpress(
+#'       data = ir,
+#'       prompt = "Suggest a graph for the iris dataset"
+#'     )),
+#'     height = c(500, 200, 1400)
+#'   )
+#'   plot_with_settings_srv(
+#'     id = "ai2",
+#'     plot_r = reactive(canvasXpress(
+#'       data = ir,
+#'       prompt = paste(
+#'         "Create a scatter plot of Sepal.Length vs Petal.Length",
+#'         "and color by Species"
+#'       )
+#'     )),
+#'     height = c(500, 200, 1400)
+#'   )
+#' }
+#'
+#' if (interactive()) {
+#'   shinyApp(ui, server)
+#' }
+#'
 plot_with_settings_srv <- function(id,
                                    plot_r,
                                    height = c(600, 200, 2000),
@@ -305,10 +445,24 @@ plot_with_settings_srv <- function(id,
         once = TRUE,
         ignoreNULL = TRUE
       )
+      # `htmlwidget` plots render through output$widget_main, so the static
+      # `plot_main` output (and its reported width) never exists and the block
+      # above never fires -- leaving default_slider_width NULL and the resize
+      # sliders unrendered (req() in output$slider_ui). Seed the range from the
+      # measured container width instead when it is still unset. For static
+      # plots this is harmless: the plot_main handler above still overwrites it
+      # with the plot width on load.
+      observeEvent(delayed_flex_width(), {
+        if (is.null(default_slider_width()) && isTRUE(delayed_flex_width() > 0)) {
+          default_slider_width(delayed_flex_width() * c(1, 0.5, 2.8))
+        }
+      }, ignoreNULL = TRUE)
     }
 
     plot_type <- reactive({
-      if (inherits(plot_r(), "ggplot")) {
+      if (inherits(plot_r(), "htmlwidget")) {
+        "widget"
+      } else if (inherits(plot_r(), "ggplot")) {
         "gg"
       } else if (inherits(plot_r(), "trellis")) {
         "trel"
@@ -384,9 +538,18 @@ plot_with_settings_srv <- function(id,
     p_width <- reactive(
       if (!is.null(input$width)) {
         input$width
+      } else if (!is.null(default_slider_width()[1])) {
+        default_slider_width()[1]
       } else {
-        if (!is.null(default_slider_width()[1])) {
-          default_slider_width()[1]
+        # For `htmlwidget` plots the static `plot_main` output is never rendered,
+        # so its width (the usual basis for `default_slider_width`) is absent and
+        # the widget would otherwise be sized `width:auto` (unbounded). Fall back
+        # to the measured container width so interactive widgets (e.g.
+        # canvasXpress) stay bounded after their own UI (customizer / toolbar)
+        # opens and closes, instead of expanding to the full viewport.
+        flex_w <- delayed_flex_width()
+        if (!is.null(flex_w) && is.numeric(flex_w) && isTRUE(flex_w > 0)) {
+          flex_w
         } else {
           # Fallback to "auto"
           "auto"
@@ -394,31 +557,76 @@ plot_with_settings_srv <- function(id,
       }
     )
     output$plot_main <- renderPlot(
-      apply_plot_modifications(
-        plot_obj = plot_r(),
-        plot_type = plot_type(),
-        dblclicking = dblclicking,
-        ranges = ranges
-      ),
+      {
+        # `htmlwidget` plots render through output$widget_main, not renderPlot.
+        req(!identical(plot_type(), "widget"))
+        apply_plot_modifications(
+          plot_obj = plot_r(),
+          plot_type = plot_type(),
+          dblclicking = dblclicking,
+          ranges = ranges
+        )
+      },
       res = get_plot_dpi(),
       height = p_height,
       width = p_width
     )
 
+    # Render path for `htmlwidget` objects (e.g. canvasXpress, plotly). These
+    # are self-contained interactive widgets rather than static R graphics, so
+    # they use the htmlwidgets shiny binding instead of renderPlot/plotOutput.
+    # The widget's class/package name drives the correct JS output binding.
+    output$widget_main <- htmlwidgets::shinyRenderWidget(
+      quote(plot_r()),
+      htmlwidgets::shinyWidgetOutput,
+      environment(),
+      quoted = TRUE
+    )
+
     output$plot_out_main <- renderUI({
       req(plot_r())
-      tags$div(
-        align = graph_align,
-        plotOutput(
-          ns("plot_main"),
-          height = "100%",
-          width = p_width(),
-          brush = `if`(brushing, brushOpts(ns("plot_brush"), resetOnNew = FALSE), NULL),
-          click = `if`(clicking, clickOpts(ns("plot_click")), NULL),
-          dblclick = `if`(dblclicking, dblclickOpts(ns("plot_dblclick")), NULL),
-          hover = `if`(hovering, hoverOpts(ns("plot_hover")), NULL)
+      if (identical(plot_type(), "widget")) {
+        widget_name <- class(plot_r())[[1L]]
+        tags$div(
+          align = graph_align,
+          htmlwidgets::shinyWidgetOutput(
+            ns("widget_main"),
+            name = widget_name,
+            package = widget_name,
+            width = `if`(is.numeric(p_width()), paste0(p_width(), "px"), p_width()),
+            height = paste0(p_height(), "px")
+          )
         )
-      )
+      } else {
+        tags$div(
+          align = graph_align,
+          plotOutput(
+            ns("plot_main"),
+            height = "100%",
+            width = p_width(),
+            brush = `if`(brushing, brushOpts(ns("plot_brush"), resetOnNew = FALSE), NULL),
+            click = `if`(clicking, clickOpts(ns("plot_click")), NULL),
+            dblclick = `if`(dblclicking, dblclickOpts(ns("plot_dblclick")), NULL),
+            hover = `if`(hovering, hoverOpts(ns("plot_hover")), NULL)
+          )
+        )
+      }
+    })
+
+    # In widget mode, route the module's own chrome to the CanvasXpress instance:
+    # the download exports the selected type (png/svg/pdf via cx.print/saveSVG/
+    # savePDF) instead of the widget HTML, and the card expand button toggles
+    # CanvasXpress fullscreen. No-op for
+    # static plots. Re-runs when the widget changes; the JS binders are
+    # idempotent and resolve the current instance at click time.
+    observeEvent(plot_type(), {
+      if (identical(plot_type(), "widget")) {
+        shinyjs::runjs(sprintf(
+          "tealWidgetsBindWidgetDownload('%s','%s'); tealWidgetsBindWidgetFullscreen('%s','%s');",
+          ns("widget_main"), ns("downbutton-data_download"),
+          ns("widget_main"), ns("plot-with-settings")
+        ))
+      }
     })
 
     output$width_warning <- renderUI({
@@ -505,9 +713,16 @@ type_download_srv <- function(id, plot_reactive, plot_type, plot_w, default_w, p
 
       output$data_download <- downloadHandler(
         filename = function() {
-          paste(input$file_name, input$file_format, sep = ".")
+          # Interactive htmlwidgets download as a self-contained HTML file.
+          ext <- `if`(identical(plot_type(), "widget"), "html", input$file_format)
+          paste(input$file_name, ext, sep = ".")
         },
         content = function(file) {
+          if (identical(plot_type(), "widget")) {
+            htmlwidgets::saveWidget(plot_reactive(), file, selfcontained = TRUE)
+            return(invisible(NULL))
+          }
+
           width <- `if`(!is.null(plot_w()), plot_w(), default_w())
           height <- `if`(!is.null(plot_h()), plot_h(), default_h())
 

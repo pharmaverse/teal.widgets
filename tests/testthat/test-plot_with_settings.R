@@ -498,3 +498,32 @@ testthat::test_that("plot_with_settings_srv returns the click ggplot2 functional
     }
   )
 })
+
+testthat::test_that("plot_with_settings_srv classifies an htmlwidget plot as type 'widget'", {
+  testthat::skip_if_not_installed("canvasXpress")
+  cx <- canvasXpress::canvasXpress(
+    data = t(as.matrix(mtcars[, c("mpg", "hp")])),
+    graphType = "Scatter2D",
+    xAxis = list("mpg"),
+    yAxis = list("hp")
+  )
+  shiny::testServer(
+    plot_with_settings_srv,
+    args = list(id = "test", plot_r = shiny::reactive(cx)),
+    expr = {
+      testthat::expect_identical(plot_type(), "widget")
+    }
+  )
+})
+
+testthat::test_that("plot_with_settings_srv still classifies a ggplot as type 'gg'", {
+  testthat::skip_if_not_installed("ggplot2")
+  gg <- ggplot2::ggplot(mtcars, ggplot2::aes(.data$mpg, .data$hp)) + ggplot2::geom_point()
+  shiny::testServer(
+    plot_with_settings_srv,
+    args = list(id = "test", plot_r = shiny::reactive(gg)),
+    expr = {
+      testthat::expect_identical(plot_type(), "gg")
+    }
+  )
+})
