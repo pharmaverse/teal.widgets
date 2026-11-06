@@ -3,7 +3,7 @@
 ### Enhancements
 
 * Added support for `tbl_split` object from `gtsummary` package to `table_with_settings`.
-* `plot_with_settings` now renders interactive `htmlwidget` objects (e.g. `canvasXpress`, `plotly`) in addition to static plots, using the widget's own shiny binding. Height and width settings apply and download produces a self-contained HTML file.
+* `plot_with_settings` now renders interactive `htmlwidget` objects (e.g. `canvasXpress`, `plotly`) in addition to static plots, using the widget's own shiny binding. Height and width settings apply and download produces a self-contained HTML file. Widgets are bound to the measured container width (rather than `width:auto`) so self-resizing widgets stay within their card.
 
 ### Bug fixes
 

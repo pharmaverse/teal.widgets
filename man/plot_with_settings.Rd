@@ -220,32 +220,76 @@ if (interactive()) {
   shinyApp(ui, server)
 }
 \dontshow{\}) # examplesIf}
-\dontshow{if (requireNamespace("canvasXpress", quietly = TRUE)) withAutoprint(\{ # examplesIf}
-# Example rendering an interactive htmlwidget (CanvasXpress) instead of a
-# static plot. Any `htmlwidget` object returned by `plot_r` is rendered
+\dontshow{if (requireNamespace("canvasXpress", quietly = TRUE) && requireNamespace("palmerpenguins", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+# Example rendering interactive htmlwidget (CanvasXpress) plots instead of
+# static plots. Any `htmlwidget` object returned by `plot_r` is rendered
 # through the widget's own shiny binding; height/width and HTML download work.
+# Try: hover the top of a chart for its toolbar, click an element to select
+# it, and click empty space (or press ESC) to reset.
 library(shiny)
 library(canvasXpress)
 
+pg <- as.data.frame(na.omit(palmerpenguins::penguins))
+
 ui <- bslib::page_fluid(
-  plot_with_settings_ui(id = "plot_with_settings")
+  tags$div(
+    style = paste(
+      "max-width:1100px; margin:16px auto; padding:12px 16px;",
+      "border:1px solid #e0e0e0; border-radius:8px; background:#f7fbfd;",
+      "font-family:sans-serif;"
+    ),
+    tags$h4(style = "margin:0 0 6px 0;", "Try the interactive CanvasXpress features"),
+    tags$ul(
+      style = "margin:0; padding-left:20px; line-height:1.6;",
+      tags$li(tags$b("Hover the top of any chart"), " to reveal the toolbar."),
+      tags$li(tags$b("Click an element"), " (a point, bar or box) to select it."),
+      tags$li(tags$b("Click empty space"), " - or press ", tags$kbd("ESC"), " - to reset.")
+    )
+  ),
+  tags$div(
+    style = "display:flex; gap:16px; max-width:1100px; margin:0 auto;",
+    tags$div(style = "flex:1;", plot_with_settings_ui(id = "scatter")),
+    tags$div(
+      style = "flex:1; display:flex; flex-direction:column; gap:16px;",
+      plot_with_settings_ui(id = "hist"),
+      plot_with_settings_ui(id = "box")
+    )
+  )
 )
 
 server <- function(input, output, session) {
-  plot_r <- reactive({
-    canvasXpress(
-      data = as.matrix(mtcars[, c("mpg", "hp")]),
-      graphType = "Scatter2D",
-      xAxis = list("mpg"),
-      yAxis = list("hp"),
-      title = "Interactive CanvasXpress scatter"
-    )
-  })
-
   plot_with_settings_srv(
-    id = "plot_with_settings",
-    plot_r = plot_r,
-    height = c(500, 200, 1200)
+    id = "scatter",
+    plot_r = reactive(canvasXpress(
+      data = pg,
+      graphType = "Scatter2D",
+      xAxis = list("flipper_length_mm"),
+      yAxis = list("body_mass_g"),
+      colorBy = "species",
+      title = "Palmer penguins - flipper length vs body mass"
+    )),
+    height = c(778, 200, 1400)
+  )
+  plot_with_settings_srv(
+    id = "hist",
+    plot_r = reactive(canvasXpress(
+      data = pg["body_mass_g"],
+      graphType = "Histogram",
+      xAxis = list("body_mass_g"),
+      title = "Palmer penguins - body mass histogram"
+    )),
+    height = c(340, 150, 1200)
+  )
+  plot_with_settings_srv(
+    id = "box",
+    plot_r = reactive(canvasXpress(
+      data = pg,
+      graphType = "Boxplot",
+      groupingFactors = list("species"),
+      yAxis = list("bill_length_mm"),
+      title = "Palmer penguins - bill length by species"
+    )),
+    height = c(340, 150, 1200)
   )
 }
 

@@ -463,9 +463,18 @@ plot_with_settings_srv <- function(id,
     p_width <- reactive(
       if (!is.null(input$width)) {
         input$width
+      } else if (!is.null(default_slider_width()[1])) {
+        default_slider_width()[1]
       } else {
-        if (!is.null(default_slider_width()[1])) {
-          default_slider_width()[1]
+        # For `htmlwidget` plots the static `plot_main` output is never rendered,
+        # so its width (the usual basis for `default_slider_width`) is absent and
+        # the widget would otherwise be sized `width:auto` (unbounded). Fall back
+        # to the measured container width so interactive widgets (e.g.
+        # canvasXpress) stay bounded after their own UI (customizer / toolbar)
+        # opens and closes, instead of expanding to the full viewport.
+        flex_w <- delayed_flex_width()
+        if (!is.null(flex_w) && is.numeric(flex_w) && isTRUE(flex_w > 0)) {
+          flex_w
         } else {
           # Fallback to "auto"
           "auto"
