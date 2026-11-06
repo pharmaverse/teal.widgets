@@ -223,7 +223,8 @@ if (interactive()) {
 \dontshow{if (requireNamespace("canvasXpress", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 # Example rendering interactive htmlwidget (CanvasXpress) plots instead of
 # static plots. Any `htmlwidget` object returned by `plot_r` is rendered
-# through the widget's own shiny binding; height/width and HTML download work.
+# through the widget's own shiny binding. For CanvasXpress charts the download
+# exports a PNG and the card expand button toggles CanvasXpress full-screen.
 # Try: hover the top of a chart for its toolbar, click an element to select
 # it, and click empty space (or press ESC) to reset.
 library(shiny)

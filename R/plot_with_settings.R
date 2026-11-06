@@ -255,7 +255,8 @@ plot_with_settings_ui <- function(id) {
 #' @examplesIf requireNamespace("canvasXpress", quietly = TRUE)
 #' # Example rendering interactive htmlwidget (CanvasXpress) plots instead of
 #' # static plots. Any `htmlwidget` object returned by `plot_r` is rendered
-#' # through the widget's own shiny binding; height/width and HTML download work.
+#' # through the widget's own shiny binding. For CanvasXpress charts the download
+#' # exports a PNG and the card expand button toggles CanvasXpress full-screen.
 #' # Try: hover the top of a chart for its toolbar, click an element to select
 #' # it, and click empty space (or press ESC) to reset.
 #' library(shiny)
@@ -608,6 +609,21 @@ plot_with_settings_srv <- function(id,
             hover = `if`(hovering, hoverOpts(ns("plot_hover")), NULL)
           )
         )
+      }
+    })
+
+    # In widget mode, route the module's own chrome to the CanvasXpress instance:
+    # the download control exports a PNG (cx.print) instead of the widget HTML,
+    # and the card expand button toggles CanvasXpress fullscreen. No-op for
+    # static plots. Re-runs when the widget changes; the JS binders are
+    # idempotent and resolve the current instance at click time.
+    observeEvent(plot_type(), {
+      if (identical(plot_type(), "widget")) {
+        shinyjs::runjs(sprintf(
+          "tealWidgetsBindWidgetDownload('%s','%s'); tealWidgetsBindWidgetFullscreen('%s','%s');",
+          ns("widget_main"), ns("downbutton-data_download"),
+          ns("widget_main"), ns("plot-with-settings")
+        ))
       }
     })
 
