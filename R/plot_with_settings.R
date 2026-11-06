@@ -252,7 +252,7 @@ plot_with_settings_ui <- function(id) {
 #'   shinyApp(ui, server)
 #' }
 #'
-#' @examplesIf requireNamespace("canvasXpress", quietly = TRUE) && requireNamespace("palmerpenguins", quietly = TRUE)
+#' @examplesIf requireNamespace("canvasXpress", quietly = TRUE)
 #' # Example rendering interactive htmlwidget (CanvasXpress) plots instead of
 #' # static plots. Any `htmlwidget` object returned by `plot_r` is rendered
 #' # through the widget's own shiny binding; height/width and HTML download work.
@@ -261,7 +261,7 @@ plot_with_settings_ui <- function(id) {
 #' library(shiny)
 #' library(canvasXpress)
 #'
-#' pg <- as.data.frame(na.omit(palmerpenguins::penguins))
+#' ir <- iris
 #'
 #' ui <- bslib::page_fluid(
 #'   tags$div(
@@ -293,35 +293,35 @@ plot_with_settings_ui <- function(id) {
 #'   plot_with_settings_srv(
 #'     id = "scatter",
 #'     plot_r = reactive(canvasXpress(
-#'       data = pg,
+#'       data = ir,
 #'       graphType = "Scatter2D",
-#'       xAxis = list("flipper_length_mm"),
-#'       yAxis = list("body_mass_g"),
-#'       colorBy = "species",
-#'       title = "Palmer penguins - flipper length vs body mass"
+#'       xAxis = list("Petal.Length"),
+#'       yAxis = list("Petal.Width"),
+#'       colorBy = "Species",
+#'       title = "Iris - petal length vs petal width"
 #'     )),
 #'     height = c(778, 200, 1400)
 #'   )
 #'   plot_with_settings_srv(
 #'     id = "hist",
 #'     plot_r = reactive(canvasXpress(
-#'       data = pg["body_mass_g"],
+#'       data = ir["Petal.Length"],
 #'       graphType = "Histogram",
-#'       xAxis = list("body_mass_g"),
-#'       title = "Palmer penguins - body mass histogram"
+#'       xAxis = list("Petal.Length"),
+#'       title = "Iris - petal length histogram"
 #'     )),
 #'     height = c(340, 150, 1200)
 #'   )
 #'   plot_with_settings_srv(
 #'     id = "box",
 #'     plot_r = reactive(canvasXpress(
-#'       data = pg,
+#'       data = ir,
 #'       graphType = "Boxplot",
-#'       groupingFactors = list("species"),
-#'       yAxis = list("bill_length_mm"),
+#'       groupingFactors = list("Species"),
+#'       yAxis = list("Petal.Length"),
 #'       showBoxplotOriginalData = TRUE,
 #'       jitter = TRUE,
-#'       title = "Palmer penguins - bill length by species"
+#'       title = "Iris - petal length by species"
 #'     )),
 #'     height = c(340, 150, 1200)
 #'   )
@@ -331,7 +331,7 @@ plot_with_settings_ui <- function(id) {
 #'   shinyApp(ui, server)
 #' }
 #'
-#' @examplesIf requireNamespace("canvasXpress", quietly = TRUE) && requireNamespace("palmerpenguins", quietly = TRUE)
+#' @examplesIf requireNamespace("canvasXpress", quietly = TRUE)
 #' # Example letting CanvasXpress's built-in AI choose the visualisation from the
 #' # data and a plain-English prompt - no `graphType` or axes supplied. The chart
 #' # is still an `htmlwidget`, so it renders, resizes and downloads through
@@ -341,7 +341,7 @@ plot_with_settings_ui <- function(id) {
 #' library(shiny)
 #' library(canvasXpress)
 #'
-#' pg <- as.data.frame(na.omit(palmerpenguins::penguins))
+#' ir <- iris
 #'
 #' ui <- bslib::page_fluid(
 #'   tags$div(
@@ -353,7 +353,7 @@ plot_with_settings_ui <- function(id) {
 #'     tags$h4(style = "margin:0 0 6px 0;", "Describe the chart in plain English"),
 #'     tags$p(
 #'       style = "margin:0;",
-#'       "Each plot was produced from the penguins data and a prompt - ",
+#'       "Each plot was produced from the iris data and a prompt - ",
 #'       "CanvasXpress picks the graph type, encodings and fits for you."
 #'     )
 #'   ),
@@ -368,18 +368,18 @@ plot_with_settings_ui <- function(id) {
 #'   plot_with_settings_srv(
 #'     id = "ai1",
 #'     plot_r = reactive(canvasXpress(
-#'       data = pg,
-#'       prompt = "Suggest a graph for the penguins dataset"
+#'       data = ir,
+#'       prompt = "Suggest a graph for the iris dataset"
 #'     )),
 #'     height = c(500, 200, 1400)
 #'   )
 #'   plot_with_settings_srv(
 #'     id = "ai2",
 #'     plot_r = reactive(canvasXpress(
-#'       data = pg,
+#'       data = ir,
 #'       prompt = paste(
-#'         "Create a scatter plot of bill_depth_mm vs body_mass_g",
-#'         "and color by species"
+#'         "Create a scatter plot of Sepal.Length vs Petal.Length",
+#'         "and color by Species"
 #'       )
 #'     )),
 #'     height = c(500, 200, 1400)
