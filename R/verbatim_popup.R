@@ -183,9 +183,10 @@ format_content <- function(verbatim_content, style = FALSE) {
       "verbatim_content should be an expression, character or condition"
     ))
 
+    is_condition <- checkmate::test_class(content, "condition")
     content <- paste(as.character(content), collapse = "\n")
 
-    if (style && !checkmate::test_class(content, "condition")) {
+    if (style && !is_condition) {
       content <- paste(styler::style_text(content), collapse = "\n")
     }
     content
