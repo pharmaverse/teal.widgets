@@ -269,3 +269,22 @@ testthat::test_that("format_content with character vector", {
     testthat::expect_equal(output, "line1\nline2\nline3")
   })
 })
+
+testthat::test_that("format_content ignores style = TRUE when passed a condition", {
+  test_content <- simpleError("object 'x' not found")
+  result <- format_content(test_content, style = TRUE)
+  shiny::isolate({
+    output <- result()
+    testthat::expect_identical(output, paste(as.character(test_content), collapse = "\n"))
+  })
+})
+
+testthat::test_that("format_content ignores style = TRUE when reactive throws an error", {
+  test_content <- shiny::reactive(stop("object 'x' not found"))
+  result <- format_content(test_content, style = TRUE)
+  shiny::isolate({
+    output <- result()
+    testthat::expect_type(output, "character")
+    testthat::expect_true(grepl("object 'x' not found", output, fixed = TRUE))
+  })
+})
